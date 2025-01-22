@@ -1,8 +1,25 @@
 import React from 'react'
 import PineLogo from '@/icons/PineconeLogo';
-
+import { isStepOneValid } from '@/utils/StepOneValidetion';
 function StepOne(props) {
-    const { handleNextStep, handleBackStep } = props;
+    const { handleNextStep, errors, formValue, setFormValue, handleError } = props;
+    const error = false
+    console.log(formValue)
+    function handleChange(event) {
+        const { name, value } = event.target
+        setFormValue((prev) => ({
+            ...prev,
+            [name]: value,
+        }))
+    }
+    function handleFormNextStep() {
+        const { isValid, errors } = isStepOneValid(formValue)
+        if (isValid) {
+            handleNextStep()
+        }
+        handleError(errors)
+    }
+
     return (
         <div className='w-screen h-screen flex flex-col justify-center items-center bg-slate-100'>
             <div className='w-[480px] h-[655px] bg-white p-8 rounded-[8px]'>
@@ -19,7 +36,14 @@ function StepOne(props) {
                         <p>First name</p>
                         <p className='text-red-600'>*</p>
                     </div>
-                    <input className='w-[416px] h-[44px] border rounded-[10px] p-[5px]' placeholder='Your first name'></input>
+                    <input
+                        name={"firstName"}
+                        className='w-[416px] h-[44px] border rounded-[10px] p-[5px]'
+                        placeholder='Your first name'
+                        onChange={handleChange}
+                    ></input>
+                    {errors.firstName.length > 0 &&
+                        (<p className='text-red-600'>{errors.firstName}</p>)}
                 </div>
                 <div className='flex flex-col gap-[8px] mb-[12px]'>
                     <div className='flex'>
@@ -36,9 +60,9 @@ function StepOne(props) {
                     <input className='w-[416px] h-[44px] border rounded-[10px] p-[5px]' placeholder='Your usename'></input>
                 </div>
                 <div >
-                    <button 
-                    className='h-[44px] w-[416px] rounded-[6px] text-white bg-black mt-[135px] flex justify-center items-center' 
-                    onClick={handleNextStep}>Continue</button>
+                    <button
+                        className='h-[44px] w-[416px] rounded-[6px] text-white bg-black mt-[135px] flex justify-center items-center'
+                        onClick={handleFormNextStep}>Continue</button>
                 </div>
             </div>
         </div>
@@ -46,3 +70,4 @@ function StepOne(props) {
 }
 
 export default StepOne
+

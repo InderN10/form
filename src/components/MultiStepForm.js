@@ -16,6 +16,15 @@ function MultiStepForm() {
         useName: "",
         phoneNumber: "",
     });
+    const [formError, setFormError] = useState({
+        firstName: "",
+        lastName: "",
+        useName: "",
+        phoneNumber: "",
+    });
+    function handleError(errors) {
+        setFormError((prev) => ({ ...prev, ...errors }));
+    }
     const Step = [StepOne, StepTwo, StepThree, FinishedForm][currentStep];
     function handleNextStep() {
         if (currentStep !== 3) {
@@ -30,7 +39,15 @@ function MultiStepForm() {
 
     return (
         <div>
-            <Step handleNextStep={handleNextStep} handleBackStep={handleBackStep} />
+            <Step
+                errors={formError}
+                formValue={formValue}
+                handleError={handleError}
+                setFormValue={setFormValue}
+                handleNextStep={handleNextStep}
+                handleBackStep={handleBackStep}
+
+            />
         </div>
     );
 };
