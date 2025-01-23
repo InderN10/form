@@ -47,14 +47,21 @@ function StepTwo(props) {
                         onChange={handleChange}
                     ></input>
                     {errors.email.length > 0 &&
-                            (<p className='text-red-600'>{errors.email}</p>)}
+                        (<p className='text-red-600'>{errors.email}</p>)}
                 </div>
                 <div className='flex flex-col gap-[8px] mb-[12px]'>
                     <div className='flex'>
                         <p>Phone number</p>
                         <p className='text-red-600'>*</p>
                     </div>
-                    <input className='w-[416px] h-[44px] border rounded-[10px] p-[5px] ' placeholder='Your phone number'></input>
+                    <input
+                        name={"phoneNumber"}
+                        className='w-[416px] h-[44px] border rounded-[10px] p-[5px] '
+                        placeholder='Your phone number'
+                        onChange={handleChange}
+                    ></input>
+                     {errors.phoneNumber.length > 0 &&
+                        (<p className='text-red-600'>{errors.phoneNumber}</p>)}
                 </div>
                 <div className='flex flex-col gap-[8px] mb-[12px]'>
                     <div className='flex'>
