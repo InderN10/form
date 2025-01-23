@@ -1,7 +1,29 @@
 import React from 'react'
 import PineLogo from '@/icons/PineconeLogo';
+import { isStepTwoValid } from '@/utils/StepTwoValidation';
 function StepTwo(props) {
-    const { handleNextStep, handleBackStep } = props;
+    const { handleNextStep, handleBackStep, formValue, setFormValue, handleError, clearError, errors } = props;
+    function handleChange(event) {
+        const { name, value } = event.target
+        setFormValue((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+        clearError(name);
+    };
+    function handleFormNextStep() {
+        const { isValid, errors } = isStepTwoValid(formValue)
+        if (isValid) {
+            const localdata = {
+                ...formValue,
+                currentStep: 1
+            }
+            localStorage.setItem("formData", JSON.stringify(localdata))
+            handleNextStep()
+        }
+        handleError(errors)
+    };
+
     return (
 
         <div className='w-screen h-screen flex flex-col justify-center items-center bg-slate-100'>
@@ -18,7 +40,14 @@ function StepTwo(props) {
                         <p>Email</p>
                         <p className='text-red-600'>*</p>
                     </div>
-                    <input className='w-[416px] h-[44px] border rounded-[10px] p-[5px]' placeholder='Your email'></input>
+                    <input
+                        name={"email"}
+                        className='w-[416px] h-[44px] border rounded-[10px] p-[5px]'
+                        placeholder='Your email'
+                        onChange={handleChange}
+                    ></input>
+                    {errors.email.length > 0 &&
+                            (<p className='text-red-600'>{errors.email}</p>)}
                 </div>
                 <div className='flex flex-col gap-[8px] mb-[12px]'>
                     <div className='flex'>
@@ -47,7 +76,7 @@ function StepTwo(props) {
                         onClick={handleBackStep}>Back</button>
                     <button
                         className='h-[44px] w-[280px] rounded-[6px] border text-white bg-black flex justify-center items-center'
-                        onClick={handleNextStep}>Continue</button>
+                        onClick={handleFormNextStep}>Continue</button>
                 </div>
             </div>
         </div>
