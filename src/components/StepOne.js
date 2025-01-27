@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PineLogo from "@/icons/PineconeLogo";
 import { isStepOneValid } from "@/utils/StepOneValidetion";
 function StepOne(props) {
@@ -10,6 +10,13 @@ function StepOne(props) {
     handleError,
     clearError,
   } = props;
+  useEffect(()=>{
+    const storedData = JSON.parse(localStorage.getItem('formData'));
+    if (storedData){
+      setFormValue(storedData);
+
+    }
+  },[setFormValue]);
   function handleChange(event) {
     const { name, value } = event.target;
     setFormValue((prev) => ({
