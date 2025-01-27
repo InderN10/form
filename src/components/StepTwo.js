@@ -85,7 +85,7 @@ function StepTwo(props) {
             name={"password"}
             className="w-[416px] h-[44px] border rounded-[10px] p-[5px]"
             placeholder="Your password"
-            // type="password"
+            type="password"
             value={formValue.password || ""}
             onChange={handleChange}
           ></input>
@@ -103,7 +103,7 @@ function StepTwo(props) {
             className="w-[416px] h-[44px] border rounded-[10px] p-[5px]"
             placeholder="Comfirm password"
             value={formValue.confirmPassword || ""}
-            //  type="password"
+             type="password"
             onChange={handleChange}
           ></input>
              {errors.confirmPassword.length > 0 && (
